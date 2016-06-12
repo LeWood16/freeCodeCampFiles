@@ -35,19 +35,6 @@ function sym(args) {
     });
     return resultArray;
   }
-   
-  // 1. make nested array of all arrays in arguments *****
-  // 2. use ifSym function on first and second nested arrays
-  // 3. reduce first and second arrays to new and improved ifSym array
-  // 4. rinse and repeat until only one array remains
-  // 5. ??????
-  // 6. PROFIT!!!
-  
-  // make nested array of first and second arrays in nested arrays
-  // use reduce function to replace first and second arrays with new array;
-  // unshift new array onto original array system
-  
- 
 // once there is only one array, testSymmetric indexOf area breaks down; bug confirmed, changing for loop from "length" to "length - 1" fixed bug;
   
   
@@ -63,10 +50,7 @@ function sym(args) {
   } 
 
   var merged = [].concat.apply([], arr);
-  
   return merged;
-
- 
   }
 
 

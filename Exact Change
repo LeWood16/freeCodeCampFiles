@@ -36,6 +36,214 @@ function checkCashRegister(price, cash, cid) {
   // store total money in register in a variable, regTotal; round to cent value
   var regTotal = total(cid);
   regTotal = Math.round(regTotal*100)/100;
+  amountPush = 0;
+
+  
+    // make array instead, and decrement from top value to bottom
+   for (var type in myObj){ // for each tender type,
+      if (cents[type] > changeDue){ // if current tender amount > change due,
+        continue;
+      } else if(cents[type] <= changeDue){ // if current tender is multiple of chngdue,
+          while(myObj[type] > 0 && changeDue % cents[type === 0]){
+            changeDue -= cents[type];
+            amountPush += cents[type];
+          }
+        myArr.push([type, amountPush]);
+      } else {
+        continue;
+      }
+   }
+  
+  
+  
+  
+  
+  if (notEnoughMoney){ // if price is over the cash given
+    return "Insufficient Funds";
+  } else if (changeDue > regTotal){ // if the register can't handle amount of change
+    return "Insufficient Funds";
+  } else if (changeDue === regTotal){ // if giving out change cleans out the register
+    return "Closed";
+  } else {
+    return myArr;
+  }
+  
+  
+  
+  // for each descending tender type, X
+  // if tender type (i.e. cent value) is more then change due, continue; X
+  
+  // if tender type is less than or equal to change due (i.e. a multiple of change due),
+  // if tender amount is greater than zero, X
+  // reduce change due by tender amount, in increments, until tender amount  or change     // due reaches zero
+  // increase change given by iterating by cent value for given tender type;
+  // push tender name and tender amount in a nested array to a variable;
+  
+  // when tender amount of current type reaches zero and change due is greater than
+  // zero, move on to the next tender type; check if it is a multiple of current change 
+  // due value; if yes, reduce change due by tender amount, in increments, until either 
+  // change due or tender amount reaches zero; repeat until change due reaches zero
+  
+  
+ 
+  
+  // Here is your change, ma'am.
+}
+
+// Example cash-in-drawer array:
+// [["PENNY", 1.01],
+// ["NICKEL", 2.05],
+// ["DIME", 3.10],
+// ["QUARTER", 4.25],
+// ["ONE", 90.00],
+// ["FIVE", 55.00],
+// ["TEN", 20.00],
+// ["TWENTY", 60.00],
+// ["ONE HUNDRED", 100.00]]
+
+checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+
+function checkCashRegister(price, cash, cid) {
+  
+  var notEnoughMoney = (cash < price);
+  var changeDue = (cash - price);
+  var myArr = [];
+
+function checkCashRegister(price, cash, cid) {
+  
+  var notEnoughMoney = (cash < price);
+  var changeDue = (cash - price);
+  var myArr = [];
+
+  var myObj = {};
+  for (var j = 0; j < cid.length; j++){
+   var val = cid[j][0];
+    var k = new Object(val);
+    myObj[val] = cid[j][1];
+  }
+  
+  var cents = {};
+  cents.PENNY = 0.01;
+  cents.NICKEL = 0.05;
+  cents.DIME = 0.10;
+  cents.QUARTER = 0.25;
+  cents.ONE = 1.00;
+  cents.FIVE = 5.00;
+  cents.TEN = 10.00;
+  cents.TWENTY = 20.00;
+  cents.ONE_HUNDRED = 100.00;
+  
+  
+  
+  function total(arr){
+    var tally = 0;
+    for (var i = 0; i < arr.length; i++){
+      tally += arr[i][1];
+    }
+    return tally;
+  }
+  
+  // store total money in register in a variable, regTotal; round to cent value
+  var regTotal = total(cid);
+  regTotal = Math.round(regTotal*100)/100;
+  amountPush = 0;
+
+  
+    // make array instead, and decrement from top value to bottom
+   for (var type in myObj){ // for each tender type,
+      if (cents[type] > changeDue){ // if current tender amount > change due,
+        continue;
+      } else if(cents[type] <= changeDue){ // if current tender is multiple of chngdue,
+          while(myObj[type] > 0 && changeDue % cents[type === 0]){
+            changeDue -= cents[type];
+            amountPush += cents[type];
+          }
+        myArr.push([type, amountPush]);
+      } else {
+        continue;
+      }
+   }
+  
+  
+  
+  
+  
+  if (notEnoughMoney){ // if price is over the cash given
+    return "Insufficient Funds";
+  } else if (changeDue > regTotal){ // if the register can't handle amount of change
+    return "Insufficient Funds";
+  } else if (changeDue === regTotal){ // if giving out change cleans out the register
+    return "Closed";
+  } else {
+    return myArr;
+  }
+  
+  
+  
+  // for each descending tender type, X
+  // if tender type (i.e. cent value) is more then change due, continue; X
+  
+  // if tender type is less than or equal to change due (i.e. a multiple of change due),
+  // if tender amount is greater than zero, X
+  // reduce change due by tender amount, in increments, until tender amount  or change     // due reaches zero
+  // increase change given by iterating by cent value for given tender type;
+  // push tender name and tender amount in a nested array to a variable;
+  
+  // when tender amount of current type reaches zero and change due is greater than
+  // zero, move on to the next tender type; check if it is a multiple of current change 
+  // due value; if yes, reduce change due by tender amount, in increments, until either 
+  // change due or tender amount reaches zero; repeat until change due reaches zero
+  
+  
+ 
+  
+  // Here is your change, ma'am.
+}
+
+// Example cash-in-drawer array:
+// [["PENNY", 1.01],
+// ["NICKEL", 2.05],
+// ["DIME", 3.10],
+// ["QUARTER", 4.25],
+// ["ONE", 90.00],
+// ["FIVE", 55.00],
+// ["TEN", 20.00],
+// ["TWENTY", 60.00],
+// ["ONE HUNDRED", 100.00]]
+
+checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+
+  var myObj = {};
+  for (var j = 0; j < cid.length; j++){
+   var val = cid[j][0];
+    var k = new Object(val);
+    myObj[val] = cid[j][1];
+  }
+  
+  var cents = {};
+  cents.PENNY = 0.01;
+  cents.NICKEL = 0.05;
+  cents.DIME = 0.10;
+  cents.QUARTER = 0.25;
+  cents.ONE = 1.00;
+  cents.FIVE = 5.00;
+  cents.TEN = 10.00;
+  cents.TWENTY = 20.00;
+  cents.ONE_HUNDRED = 100.00;
+  
+  
+  
+  function total(arr){
+    var tally = 0;
+    for (var i = 0; i < arr.length; i++){
+      tally += arr[i][1];
+    }
+    return tally;
+  }
+  
+  // store total money in register in a variable, regTotal; round to cent value
+  var regTotal = total(cid);
+  regTotal = Math.round(regTotal*100)/100;
   
   
   

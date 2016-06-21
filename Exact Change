@@ -1,6 +1,4 @@
 
-
-
 function checkCashRegister(price, cash, cid) {
   
   var notEnoughMoney = (cash < price);
@@ -41,16 +39,33 @@ function checkCashRegister(price, cash, cid) {
   
   
   
-  if (notEnoughMoney){
+  if (notEnoughMoney){ // if price is over the cash given
     return "Insufficient Funds";
-  } else if (changeDue > regTotal){
+  } else if (changeDue > regTotal){ // if the register can't handle amount of change
     return "Insufficient Funds";
-  } else if (changeDue === regTotal){
+  } else if (changeDue === regTotal){ // if giving out change cleans out the register
     return "Closed";
   } else {
     return cents;
   }
   
+  
+  
+  // for each descending tender type,
+  // if tender type (i.e. cent value) is more then change due, continue;
+  
+  // if tender type is less than or equal to change due (i.e. a multiple of change due),
+  // if tender amount is greater than zero,
+  // reduce change due by tender amount, in increments, until tender amount  or change     // due reaches zero
+  // increase change given by iterating by cent value for given tender type;
+  // push tender name and tender amount in a nested array to a variable;
+  
+  // when tender amount of current type reaches zero and change due is greater than
+  // zero, move on to the next tender type; check if it is a multiple of current change 
+  // due value; if yes, reduce change due by tender amount, in increments, until either 
+  // change due or tender amount reaches zero; repeat until change due reaches zero
+  
+  // 
   
   
   // Here is your change, ma'am.

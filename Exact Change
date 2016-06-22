@@ -1,10 +1,7 @@
 
 function checkCashRegister(price, cash, cid) {
   
-  
-  price *= 100;
-  cash *= 100;
-  var varObj = {
+  varObj = {
     changeInitCents : (cash - price)*100,
     changeDueCents : (cash - price)*100,
     myArr : [],
@@ -12,50 +9,44 @@ function checkCashRegister(price, cash, cid) {
     amounts : [],
     names : ["ONE HUNDRED", "TWENTY", "TEN", "FIVE", "ONE", "QUARTER", "DIME", "NICKEL", "PENNY"],
     priceInCents : price *= 100,
-    cashInCents : cash *= 100
-    
+    cashInCents : cash *= 100,
+    notEnoughMoney : (cash < price) 
   };
-  var notEnoughMoney = (cash < price);
-  var changeInit = (cash - price)*100;
-  var changeDue = (cash - price)*100;
-  var myArr = [];
-  var values = [10000, 2000, 1000, 500, 100, 25, 10, 5, 1];
-  var amounts = [];
-  var names = ["ONE HUNDRED","TWENTY", "TEN", "FIVE", "ONE", "QUARTER", "DIME", "NICKEL", "PENNY"];
   
-  for (var l = 8; l > 0; l--){
-    var vall = cid[l][1];
-    var centss = +(vall*100).toFixed(8);
-    amounts.push(centss);
+  for (var i = 8; i > 0; i--){
+    var val = cid[i][1];
+    var cents = +(val*100).toFixed(8);
+    varObj.amounts.push(cents);
   }
   
-
+/*
   var myObj = {};
   for (var j = 0; j < cid.length; j++){
    var val = cid[j][0];
     var k = new Object(val);
     myObj[val] = cid[j][1];
   }
+  */
+  varObj.cents = {
+  PENNY : 1,
+  NICKEL : 5,
+  DIME : 10,
+  QUARTER : 25,
+  ONE : 100,
+  FIVE : 500,
+  TEN : 1000,
+  TWENTY : 2000,
+  ONE_HUNDRED : 10000
+  };
   
-  var cents = {};
-  cents.PENNY = 1;
-  cents.NICKEL = 5;
-  cents.DIME = 10;
-  cents.QUARTER = 25;
-  cents.ONE = 100;
-  cents.FIVE = 500;
-  cents.TEN = 1000;
-  cents.TWENTY = 2000;
-  cents.ONE_HUNDRED = 10000;
-  
-  var t = amounts.reduce(function(a, b) {
+  var t = varObj.amounts.reduce(function(a, b) {
     return a + b; 
   });
   
   // store total money in register in a variable, regTotal; round to cent value
   var ticker = 0;
 
-
+/*
   // everything is integer-based now... now just FIX THIS FUNCTION :D :D :D 
   // make array instead, and decrement from top value to bottom
    for (var m = 0; m < values.length; m++){ // for each tender type,
@@ -77,20 +68,20 @@ function checkCashRegister(price, cash, cid) {
      }
    }
   
- 
+ */
   // the problem is with the non integer math... change them to integers, then change  
   // them to non integers after the array has been constructed
   
-  if (notEnoughMoney){ // if price is over the cash given
+  if (varObj.notEnoughMoney){ // if price is over the cash given
     return "Insufficient Funds";
-  } else if (changeDue > t){ // if the register can't handle amount of change
-    return t; //"Insufficient Funds";
-  } else if (changeInit === t){ // if giving out change cleans out the register
+  } else if (varObj.changeDueCents > t){ // if the register can't handle amount of change
+    return "Insufficient Funds";
+  } else if (varObj.changeInitCents === t){ // if giving out change cleans out the register
     return "Closed";
   } else if (ticker === 0){ // if the register can't handle amount of change
-    return "Insufficient Funds";
+    return "Insufficient Funds"; //"Insufficient Funds";
   } else {
-    return myArr;
+    return varObj.myArr;
    // return "new 'change due': " + changeDue + "; \r" + "array: " + myArr;
   }
   

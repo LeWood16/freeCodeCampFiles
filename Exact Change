@@ -13,7 +13,7 @@ function checkCashRegister(price, cash, cid) {
     notEnoughMoney : (cash < price) 
   };
   
-  for (var i = 8; i > 0; i--){
+  for (var i = 8; i > -1; i--){
     var val = cid[i][1];
     var cents = +(val*100).toFixed(8);
     varObj.amounts.push(cents);
@@ -75,7 +75,7 @@ function checkCashRegister(price, cash, cid) {
   if (varObj.notEnoughMoney){ // if price is over the cash given
     return "Insufficient Funds";
   } else if (varObj.changeDueCents > t){ // if the register can't handle amount of change
-    return "Insufficient Funds";
+    return varObj.amounts;
   } else if (varObj.changeInitCents === t){ // if giving out change cleans out the register
     return "Closed";
   } else if (ticker === 0){ // if the register can't handle amount of change

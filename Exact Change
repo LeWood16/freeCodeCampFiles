@@ -2,15 +2,10 @@
 function checkCashRegister(price, cash, cid) {
   
   varObj = {
-    changeInitCents : (cash - price)*100,
-    changeDueCents : (cash - price)*100,
-    myArr : [],
-    centValues : [10000, 2000, 1000, 500, 100, 25, 5, 1],
-    amounts : [],
-    names : ["ONE HUNDRED", "TWENTY", "TEN", "FIVE", "ONE", "QUARTER", "DIME", "NICKEL", "PENNY"],
-    priceInCents : price *= 100,
-    cashInCents : cash *= 100,
-    notEnoughMoney : (cash < price) 
+    changeInitCents : (cash - price)*100, changeDueCents : (cash - price)*100,
+    myArr : [], centValues : [10000, 2000, 1000, 500, 100, 25, 5, 1],
+    names : ["ONE HUNDRED", "TWENTY", "TEN", "FIVE", "ONE", "QUARTER", "DIME", "NICKEL", "PENNY"], amounts : [], notEnoughMoney : (cash < price),
+    priceInCents : price *= 100, cashInCents : cash *= 100,
   };
   
   for (var i = 8; i > -1; i--){
@@ -19,90 +14,45 @@ function checkCashRegister(price, cash, cid) {
     varObj.amounts.push(cents);
   }
   
-/*
-  var myObj = {};
-  for (var j = 0; j < cid.length; j++){
-   var val = cid[j][0];
-    var k = new Object(val);
-    myObj[val] = cid[j][1];
-  }
-  */
   varObj.cents = {
-  PENNY : 1,
-  NICKEL : 5,
-  DIME : 10,
-  QUARTER : 25,
-  ONE : 100,
-  FIVE : 500,
-  TEN : 1000,
-  TWENTY : 2000,
-  ONE_HUNDRED : 10000
+  PENNY : 1, NICKEL : 5, DIME : 10, QUARTER : 25, ONE : 100,
+  FIVE : 500, TEN : 1000, TWENTY : 2000, ONE_HUNDRED : 10000
   };
   
   var t = varObj.amounts.reduce(function(a, b) {
     return a + b; 
   });
   
-  // store total money in register in a variable, regTotal; round to cent value
   var ticker = 0;
-
-/*
-  // everything is integer-based now... now just FIX THIS FUNCTION :D :D :D 
-  // make array instead, and decrement from top value to bottom
-   for (var m = 0; m < values.length; m++){ // for each tender type,
-     if(values[m] <= changeDue && amounts[m] >= 0){ 
-       ticker++;
-       var amountPush = 0;
-       var inc = values[m];
+  for (var m = 0; m < varObj.centValues.length; m++){ 
+    if(varObj.centValues[m] <= varObj.changeDueCents && varObj.amounts[m] > 0){
+    ticker++;
+    var amountPush = 0;
+    var inc = varObj.centValues[m];
        
-       do{
-         changeDue -= inc;
-         amountPush += inc;
-         amounts[m] -= inc;
-       }
-      while(amounts[m] > 0 && changeDue % values[m] === 0 && changeDue > 0);
-
-       myArr.push([names[m], amountPush]);
-     } else if (amounts[m] > changeDue){
+    while(varObj.amounts[m] > 0 && varObj.changeDueCents % varObj.centValues[m] === 0 && varObj.changeDueCents > 0){
+      varObj.changeDueCents -= inc;
+      amountPush += inc;
+      varObj.amounts[m] -= inc;
+    }
+    amountPush = amountPush/100;
+    varObj.myArr.push([varObj.names[m], amountPush]);
+    } else if (varObj.centValues[m] > varObj.changeDueCents){
        continue;
-     }
+      }
    }
-  
- */
-  // the problem is with the non integer math... change them to integers, then change  
-  // them to non integers after the array has been constructed
   
   if (varObj.notEnoughMoney){ // if price is over the cash given
     return "Insufficient Funds";
-  } else if (varObj.changeDueCents > t){ // if the register can't handle amount of change
-    return varObj.amounts;
-  } else if (varObj.changeInitCents === t){ // if giving out change cleans out the register
+  } else if (varObj.changeDueCents > t){//if register can't handle the change
+    return "Insufficient Funds";
+  } else if (varObj.changeInitCents === t){//if change empties register
     return "Closed";
-  } else if (ticker === 0){ // if the register can't handle amount of change
-    return "Insufficient Funds"; //"Insufficient Funds";
+  } else if (ticker === 0){ // if register can't handle amount of change
+    return "Insufficient Funds";
   } else {
-    return varObj.myArr;
-   // return "new 'change due': " + changeDue + "; \r" + "array: " + myArr;
+    return varObj.myArr;//varObj.myArr;
   }
-  
-  
-  
-  // for each descending tender type, X
-  // if tender type (i.e. cent value) is more then change due, continue; X
-  
-  // if tender type is less than or equal to change due (i.e. a multiple of change due),
-  // if tender amount is greater than zero, X
-  // reduce change due by tender amount, in increments, until tender amount  or change     // due reaches zero
-  // increase change given by iterating by cent value for given tender type;
-  // push tender name and tender amount in a nested array to a variable;
-  
-  // when tender amount of current type reaches zero and change due is greater than
-  // zero, move on to the next tender type; check if it is a multiple of current change 
-  // due value; if yes, reduce change due by tender amount, in increments, until either 
-  // change due or tender amount reaches zero; repeat until change due reaches zero
-  
-  
- 
   
   // Here is your change, ma'am.
 }
@@ -118,4 +68,4 @@ function checkCashRegister(price, cash, cid) {
 // ["TWENTY", 60.00],
 // ["ONE HUNDRED", 100.00]]
 
-checkCashRegister(19.50, 20.00, [["PENNY", 0.50], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+checkCashRegister(3.26, 100.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);

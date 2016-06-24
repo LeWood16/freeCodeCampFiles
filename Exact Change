@@ -23,24 +23,48 @@ function checkCashRegister(price, cash, cid) {
     return a + b; 
   });
   
+  
+  
+  
+  
+  
+  
   var ticker = 0;
-  for (var m = 0; m < varObj.centValues.length; m++){ 
+  
+  
+  for (var m = 0; m <= varObj.centValues.length; m++){ 
     if(varObj.centValues[m] <= varObj.changeDueCents && varObj.amounts[m] > 0){
     ticker++;
+    var one = varObj.centValues[m] <= varObj.changeDueCents;
+    var two = varObj.amounts[m] > 0;
+    var three = varObj.amounts[m] > 0;
+    var four = varObj.changeDueCents % varObj.centValues[m] === 0;
+    var five = varObj.changeDueCents > 0;
     var amountPush = 0;
     var inc = varObj.centValues[m];
        
+      
     while(varObj.amounts[m] > 0 && varObj.changeDueCents % varObj.centValues[m] === 0 && varObj.changeDueCents > 0){
       varObj.changeDueCents -= inc;
       amountPush += inc;
       varObj.amounts[m] -= inc;
     }
+     var test = "test boolean one for " + varObj.names[m] + ": " + one + "." + "\n" + "test boolean two for " + varObj.names[m] + ": " + two + "." + "\n" + "test boolean three for " + varObj.names[m] + ": " + three + "." + "\n" + "test boolean four for " + varObj.names[m] + ": " + four + "." + "\n" + "test boolean five for " + varObj.names[m] + ": " + five + "." + "\n";
+    console.log(test);
+      
     amountPush = amountPush/100;
     varObj.myArr.push([varObj.names[m], amountPush]);
     } else if (varObj.centValues[m] > varObj.changeDueCents){
        continue;
       }
    }
+  
+  
+  
+  
+  
+  
+  
   
   if (varObj.notEnoughMoney){ // if price is over the cash given
     return "Insufficient Funds";
@@ -51,7 +75,7 @@ function checkCashRegister(price, cash, cid) {
   } else if (ticker === 0){ // if register can't handle amount of change
     return "Insufficient Funds";
   } else {
-    return varObj.myArr;//varObj.myArr;
+    return; //varObj.myArr;
   }
   
   // Here is your change, ma'am.

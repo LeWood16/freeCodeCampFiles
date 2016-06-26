@@ -26,15 +26,26 @@ function updateInventory(arr1, arr2) {
      existing[val] = incoming[val];
    }
  }
+  var test = [];
+  var test2 = [];
   
+  function objToArr(obj){
+    var arr = [];
+    for (var val in obj){
+      test.push([val, obj[val]]);
+    }
+  }
+ 
+  objToArr(existing);
+  test.sort();
   
+  for (var i = 0; i < test.length; i++){
+    test2.push([test[i][1], test[i][0]]);
+  }
   
-  
-    return existing;
+  return test2;
 }
 
-// if item does not currently exist in arr1, add it 
-// if item exists already in arr1, add new amount to current amount
 
 // Example inventory lists
 var curInv = [

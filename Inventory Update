@@ -1,0 +1,54 @@
+
+function updateInventory(arr1, arr2) {
+    // All inventory must be accounted for or you're fired!
+  
+  
+      
+ function arrToObj(arr){
+   var obj = {};
+   for (var val in arr){
+     var key = arr[val][1];
+     var value = arr[val][0];
+     obj[key] = value;
+   }
+   return obj;
+ } 
+  
+ var existing = arrToObj(arr1);
+ var incoming = arrToObj(arr2);
+
+ var arr = [];
+ for (var val in incoming){
+   if (existing.hasOwnProperty(val)){
+     (existing[val] += incoming[val]);
+
+   } else {
+     existing[val] = incoming[val];
+   }
+ }
+  
+  
+  
+  
+    return existing;
+}
+
+// if item does not currently exist in arr1, add it 
+// if item exists already in arr1, add new amount to current amount
+
+// Example inventory lists
+var curInv = [
+    [21, "Bowling Ball"],
+    [2, "Dirty Sock"],
+    [1, "Hair Pin"],
+    [5, "Microphone"]
+];
+
+var newInv = [
+    [2, "Hair Pin"],
+    [3, "Half-Eaten Apple"],
+    [67, "Bowling Ball"],
+    [7, "Toothpaste"]
+];
+
+updateInventory(curInv, newInv);

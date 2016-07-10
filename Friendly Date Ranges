@@ -25,13 +25,13 @@ function makeFriendlyDates(arr) {
   var monthTwo = arr[1].substr(5, 2);
 
   // removes zero from zeroth month value if present
-  if (arr[0].substr(5, 1) == 0){
+  if (arr[0].substr(5, 1) === 0){
     monthOne = arr[0].substr(5, 2);
   } else {
     monthOne = arr[0].substr(6, 1);
   }
   
-  if (arr[1].substr(5, 1) == 0){
+  if (arr[1].substr(5, 1) === 0){
     monthTwo = arr[1].substr(5, 2);
   } else {
     monthTwo = arr[1].substr(6, 1);
@@ -49,10 +49,11 @@ function makeFriendlyDates(arr) {
   } else {
     dayTwo = arr[1].substr(8, 2);
   }
+  var m = dateVar.months[monthOne];
+  var d = dateVar.days[dayOne];
+  var dateStr = m + " " + d + ", " + arr[0].substr(0, 4);
   
-
-  
-  return dateVar.days[dayOne];
+  return dateStr;
 }
 
 makeFriendlyDates(['2016-07-01', '2016-07-04']);

@@ -1,0 +1,58 @@
+
+function makeFriendlyDates(arr) {
+  
+  
+  var dateVar = {
+    months : {
+      1 : "January", 2 : "February", 3 : "March", 4 : "April", 5 : "May",
+      6 : "June", 7 : "July", 8 : "August", 9 : "September",
+      10 : "October", 11 : "November", 12 : "December"
+    },
+    days : {
+      1 : "1st", 2 : "2nd", 3 : "3rd", 4 : "4th", 5 : "5th", 6 : "6th",
+      7 : "7th", 8 : "8th", 9 : "9th", 10 : "10th", 11 : "11th", 12 : "12th",
+      13 : "13th", 14 : "14th", 15 : "15th", 16 : "16th", 17 : "17th",
+      18 : "18th", 19 : "19th", 20 : "20th", 21 : "21st", 22 : "22nd",
+      23 : "23rd", 24 : "24th", 25 : "25th", 26 : "26th", 27 : "27th",
+      28 : "28th", 29 : "29th", 30 : "30th", 31 : "31st", 
+    }
+  };
+  
+  var arr2 = arr[0].split("");
+  var dayOne = arr[0].substr(8, 2);
+  var dayTwo = arr[1].substr(8, 2);
+  var monthOne = arr[0].substr(5, 2);
+  var monthTwo = arr[1].substr(5, 2);
+
+  // removes zero from zeroth month value if present
+  if (arr[0].substr(5, 1) == 0){
+    monthOne = arr[0].substr(5, 2);
+  } else {
+    monthOne = arr[0].substr(6, 1);
+  }
+  
+  if (arr[1].substr(5, 1) == 0){
+    monthTwo = arr[1].substr(5, 2);
+  } else {
+    monthTwo = arr[1].substr(6, 1);
+  }
+ 
+  // removes zero from zeroth day value if present
+  if (arr[0].substr(8, 1) == 0){
+    dayOne = arr[0].substr(9, 1);
+  } else {
+    dayOne = arr[0].substr(8, 2);
+  }
+  
+  if (arr[1].substr(8, 1) == 0){
+    dayTwo = arr[1].substr(9, 1);
+  } else {
+    dayTwo = arr[1].substr(8, 2);
+  }
+  
+
+  
+  return dateVar.days[dayOne];
+}
+
+makeFriendlyDates(['2016-07-01', '2016-07-04']);

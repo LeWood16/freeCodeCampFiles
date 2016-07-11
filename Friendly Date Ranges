@@ -49,11 +49,24 @@ function makeFriendlyDates(arr) {
   } else {
     dayTwo = arr[1].substr(8, 2);
   }
-  var m = dateVar.months[monthOne];
-  var d = dateVar.days[dayOne];
-  var dateStr = m + " " + d + ", " + arr[0].substr(0, 4);
+  var mOne = dateVar.months[monthOne];
+  var dOne = dateVar.days[dayOne];
+  var yOne = arr[0].substr(0, 4);
+  var mTwo = dateVar.months[monthTwo];
+  var dTwo = dateVar.days[dayTwo];
+  var yTwo = arr[1].substr(0, 4);
+
+  var s = ((yTwo - yOne)*365) + ((monthTwo - monthOne)*30) + (dayTwo - dayOne);
+
+  var dateStrOne = mOne + " " + dOne + ", " + yOne;
+  var dateStrTwo = mTwo + " " + dTwo + ", " + yTwo;
+  var arr3 = [];
   
-  return dateStr;
+  if (s > 365){
+    arr3 = [dateStrOne, dateStrTwo];
+    return arr3;
+  } 
+  
 }
 
 makeFriendlyDates(['2016-07-01', '2016-07-04']);

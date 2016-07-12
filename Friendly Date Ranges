@@ -1,7 +1,7 @@
 
 function makeFriendlyDates(arr) {
   
-  
+  // object with cardinal keys and ordinal values for months and days
   var dateVar = {
     months : {
       1 : "January", 2 : "February", 3 : "March", 4 : "April", 5 : "May",
@@ -18,23 +18,23 @@ function makeFriendlyDates(arr) {
     }
   };
   
-  var arr2 = arr[0].split("");
+  // cardinal versions of argument days and months
   var dayOne = arr[0].substr(8, 2);
   var dayTwo = arr[1].substr(8, 2);
   var monthOne = arr[0].substr(5, 2);
   var monthTwo = arr[1].substr(5, 2);
 
   // removes zero from zeroth month value if present
-  if (arr[0].substr(5, 1) === 0){
-    monthOne = arr[0].substr(5, 2);
-  } else {
+  if (arr[0].substr(5, 1) == 0){
     monthOne = arr[0].substr(6, 1);
+  } else {
+    monthOne = arr[0].substr(5, 2);
   }
   
-  if (arr[1].substr(5, 1) === 0){
-    monthTwo = arr[1].substr(5, 2);
-  } else {
+  if (arr[1].substr(5, 1) == 0){
     monthTwo = arr[1].substr(6, 1);
+  } else {
+    monthTwo = arr[1].substr(5, 2);
   }
  
   // removes zero from zeroth day value if present
@@ -49,24 +49,45 @@ function makeFriendlyDates(arr) {
   } else {
     dayTwo = arr[1].substr(8, 2);
   }
-  var mOne = dateVar.months[monthOne];
-  var dOne = dateVar.days[dayOne];
-  var yOne = arr[0].substr(0, 4);
-  var mTwo = dateVar.months[monthTwo];
-  var dTwo = dateVar.days[dayTwo];
-  var yTwo = arr[1].substr(0, 4);
-
-  var s = ((yTwo - yOne)*365) + ((monthTwo - monthOne)*30) + (dayTwo - dayOne);
-
-  var dateStrOne = mOne + " " + dOne + ", " + yOne;
-  var dateStrTwo = mTwo + " " + dTwo + ", " + yTwo;
-  var arr3 = [];
   
-  if (s > 365){
-    arr3 = [dateStrOne, dateStrTwo];
-    return arr3;
-  } 
   
+  // ordinal versions of argument days and months
+  var mOne = dateVar.months[monthOne],
+      dOne = dateVar.days[dayOne],
+      yOne = arr[0].substr(0, 4),
+      mTwo = dateVar.months[monthTwo],
+      dTwo = dateVar.days[dayTwo],
+      yTwo = arr[1].substr(0, 4);
+
+  // range in days between the two dates
+  var range =  Math.floor(( Date.parse(arr[1]) - Date.parse(arr[0]) ) / 86400000);
+
+  var c = new Date();
+  var currentYear = c.getFullYear();
+  
+  
+  // if dates are exactly the same
+   if (range === 0){
+   return ([mOne + " " + dOne + ", " + yOne]);
+  // if range between dates is greater than or equal to a year
+   } else if (range >= 365){
+  return [mOne + " " + dOne + ", " + yOne, mTwo + " " + dTwo + ", " + yTwo];
+  // if range between dates is less than a year but more than 360 days apart
+   } else if (range < 365 && range > 360){
+  return [mOne + " " + dOne + ", " + yOne, mTwo +  " " + dTwo];
+  // if dates occur in the exact same month
+  } else if (range < 365 && mOne === mTwo){
+  return [mOne + " " + dOne, dTwo];
+  // if first year is the current year and range is less than a year
+  } else if (yOne == currentYear && range < 365){
+  return [mOne + " " + dOne, mTwo + " " + dTwo];
+  // if range between dates is less than a year
+  } else if (range < 365){
+  return [mOne + " " + dOne + ", " + yOne, mTwo + " " + dTwo];
+  // kick out of loop and return if none of above return true
+  } else {
+  return;
+  }  
 }
 
-makeFriendlyDates(['2016-07-01', '2016-07-04']);
+makeFriendlyDates(["2022-09-05", "2023-09-04"]);

@@ -1,0 +1,33 @@
+
+function orbitalPeriod(arr) {
+  var GM = 398600.4418;
+  var earthRadius = 6367.4447;
+  var arr1 = [];
+  
+  // take in name of satellite and its average altitude, and return name and orbital period in object form
+  function alt(name, avgAlt, i){
+  var obj = {};
+  var obj1 = {};
+  obj.name = arr[i].name;
+  var a = arr[i].avgAlt + earthRadius;
+  a = Math.pow(a, 3);
+  a = a/GM;
+  a = Math.sqrt(a);
+  a = 2 * 3.141592653589793238462643383279502884197169399375105820974944 * a;
+  a = Math.round(a);
+  obj.orbitalPeriod = a;
+  obj1.name = name;
+  obj1.orbitalPeriod = obj.orbitalPeriod;
+  return obj1;
+  }
+  //first testings were too inaccurate; decided to use first 60 digits of pi   for more accuracy, which solved the problem
+ 
+  for (var i = 0; i < arr.length; i++){
+    var answer = alt(arr[i].name, arr[i].avgAlt, i);
+    arr1.push(answer);
+  }
+  return arr1;
+  
+}
+
+orbitalPeriod([{name: "iss", avgAlt: 413.6}, {name: "hubble", avgAlt: 556.7}, {name: "moon", avgAlt: 378632.553}]);

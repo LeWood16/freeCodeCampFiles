@@ -2,26 +2,36 @@
 function pairwise(arr, arg) {
   
   var arr2 = [];
+  var indexCheckArr = [];
   // check for possible sums of 7 in each possible pair; push each pair to arr2
   for (var i = 0; i < arr.length; i++){
     for (var j = 0; j < arr.length; j++){
       var sum = arr[i] + arr[j];
-      var x = arr2.indexOf(arr[i]) < 0; // first var is not in arr2
-      var y = arr2.indexOf(arr[j]) < 0; // second var is not in arr2
-      if (sum === arg && x && y){ // if sum = arg AND neither vars are in arr2,
+      var x = arr2.indexOf(arr[i]) < 0 && arr2.indexOf(arr[j]) < 0; // first  and second var is not in arr2
+      var iOne = arr.indexOf(arr[i]);
+      var iTwo = arr.indexOf(arr[j]);
+      var notUsedOne = indexCheckArr.indexOf(iOne) < 0;
+      var notUsedTwo = indexCheckArr.indexOf(iTwo) < 0;
+
+      if (sum === arg && x && notUsedOne && notUsedTwo){ // if sum = arg AND neither vars are in arr2,
         arr2.push(arr[i], arr[j]); // push the pair to arr2
+        indexCheckArr.push(arr.indexOf(arr[i]));
+        indexCheckArr.push(arr.indexOf(arr[j]));
+
       }
     }
   }
+
   // reduce arr2 values to their index values in arr
   for (var l = 0; l < arr2.length; l++){
     arr2[l] = arr.indexOf(arr2[l]);
   }
-  
+
   
   var s = arr2.reduce(function(a, b){
     return a + b;
   });
+
   // comb arr2 for indices; sum up indices, then return sum
   return s;
 }

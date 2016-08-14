@@ -1,17 +1,25 @@
 
 function pairwise(arr, arg) {
   
-  
+  var usedNums = [];
+  var sum = 0;
   
   //function that returns sum of indices
   function indiceSum(a, b){
     var aIndex = arr.indexOf(a);
     var bIndex = arr.indexOf(b);
     var pairSum = a + b;
-    if (aIndex === bIndex){ // if indices are the same, return
+    var sameIndex = (aIndex === bIndex);
+    var usedBefore = usedNums.indexOf(a) > -1 || usedNums.indexOf(b) > -1;
+    if (sameIndex){ // if indices are the same, return
+      return;
+    } else if (usedBefore){
       return;
     } else if (pairSum === arg){ // if sum of pairs equals arg, return sum
     var indSum = aIndex + bIndex;
+    usedNums.push(a);
+    usedNums.push(b);
+    sum += indSum;
     return indSum; // else, return
     } else {
       return;
@@ -19,10 +27,34 @@ function pairwise(arr, arg) {
   }
   
   //function that walks through all possible combinations of nums in arr
+  for (var i = 0; i < arr.length - 1; i++){
+      console.log(arr[i], arr[i+1]);
+    }
+  
+  /*
+  indiceSum(arr[0], arr[1]);
+  indiceSum(arr[0], arr[2]);
+  indiceSum(arr[0], arr[3]);
+  indiceSum(arr[0], arr[4]);
+  indiceSum(arr[0], arr[5]);
+  indiceSum(arr[1], arr[2]);
+  indiceSum(arr[1], arr[3]);
+  indiceSum(arr[1], arr[4]);
+  indiceSum(arr[1], arr[5]);
+  indiceSum(arr[2], arr[3]);
+  indiceSum(arr[2], arr[4]);
+  indiceSum(arr[2], arr[5]);
+  indiceSum(arr[3], arr[4]);
+  indiceSum(arr[3], arr[5]);
+  indiceSum(arr[4], arr[5]);
+*/
+
+
+
+
+
   
   
-  
-  return indiceSum(3,4);
 }
 
 pairwise([1,4,2,3,0,5], 7);

@@ -11,7 +11,10 @@ function pairwise(arr, arg) {
     var pairSum = a + b;
     var sameIndex = (aIndex === bIndex);
     var usedBefore = usedNums.indexOf(a) > -1 || usedNums.indexOf(b) > -1;
-    if (sameIndex){ // if indices are the same, return
+    if (a === b){
+      bIndex = arr.indexOf(b, aIndex + 1);
+    }
+     if (sameIndex){
       return;
     } else if (usedBefore){
       return;
@@ -38,7 +41,7 @@ function pairwise(arr, arg) {
 return sum;
 
 
-  
+  // index "a" and index "b" are the same, because a and b are the same number; but a and b are different indexes, and indexing them only brings up the first case that the number is in the array
   
 }
 

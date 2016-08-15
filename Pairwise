@@ -1,27 +1,29 @@
 
 function pairwise(arr, arg) {
   
-  var usedNums = [];
+  var usedIndices = [];
   var sum = 0;
   
   //function that returns sum of indices
   function indiceSum(a, b){
     var aIndex = arr.indexOf(a);
     var bIndex = arr.indexOf(b);
-    var pairSum = a + b;
-    var sameIndex = (aIndex === bIndex);
-    var usedBefore = usedNums.indexOf(a) > -1 || usedNums.indexOf(b) > -1;
-    if (a === b){
+    if (aIndex === bIndex){
       bIndex = arr.indexOf(b, aIndex + 1);
     }
+    var pairSum = a + b;
+    var sameIndex = (aIndex === bIndex);
+    var indicesUsedBefore = usedIndices.indexOf(aIndex) > -1 || usedIndices.indexOf(bIndex) > -1;
      if (sameIndex){
       return;
-    } else if (usedBefore){
+    } else if (indicesUsedBefore){
       return;
     } else if (pairSum === arg){ // if sum of pairs equals arg, return sum
     var indSum = aIndex + bIndex;
     usedNums.push(a);
     usedNums.push(b);
+    usedIndices.push(aIndex);
+    usedIndices.push(bIndex);
     sum += indSum;
     return indSum; // else, return
     } else {
@@ -36,13 +38,12 @@ function pairwise(arr, arg) {
     }
   }
   
-
-
+ 
 return sum;
 
 
-  // index "a" and index "b" are the same, because a and b are the same number; but a and b are different indexes, and indexing them only brings up the first case that the number is in the array
+
   
 }
 
-pairwise([1, 1, 1], 2);
+pairwise([0, 0, 0, 0, 1, 1], 1);

@@ -28,33 +28,18 @@ function pairwise(arr, arg) {
   
   //function that walks through all possible combinations of nums in arr
   for (var i = 0; i < arr.length - 1; i++){
-      console.log(arr[i], arr[i+1]);
+    for (var j = 1 + i; j < arr.length; j++){
+      indiceSum(arr[i], arr[j]);
     }
+  }
   
-  /*
-  indiceSum(arr[0], arr[1]);
-  indiceSum(arr[0], arr[2]);
-  indiceSum(arr[0], arr[3]);
-  indiceSum(arr[0], arr[4]);
-  indiceSum(arr[0], arr[5]);
-  indiceSum(arr[1], arr[2]);
-  indiceSum(arr[1], arr[3]);
-  indiceSum(arr[1], arr[4]);
-  indiceSum(arr[1], arr[5]);
-  indiceSum(arr[2], arr[3]);
-  indiceSum(arr[2], arr[4]);
-  indiceSum(arr[2], arr[5]);
-  indiceSum(arr[3], arr[4]);
-  indiceSum(arr[3], arr[5]);
-  indiceSum(arr[4], arr[5]);
-*/
 
 
-
+return sum;
 
 
   
   
 }
 
-pairwise([1,4,2,3,0,5], 7);
+pairwise([1, 1, 1], 2);

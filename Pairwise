@@ -2,12 +2,13 @@
 function pairwise(arr, arg) {
   
   var usedIndices = [];
+  var arr2 = arr;
   var sum = 0;
   
   //function that returns sum of indices
   function indiceSum(a, b){
-    var aIndex = arr.indexOf(a);
-    var bIndex = arr.indexOf(b);
+    var aIndex = arr2.indexOf(a);
+    var bIndex = arr2.indexOf(b);
     if (aIndex === bIndex){
       bIndex = arr.indexOf(b, aIndex + 1);
     }
@@ -17,13 +18,15 @@ function pairwise(arr, arg) {
      if (sameIndex){
       return;
     } else if (indicesUsedBefore){
+      console.log("Cannot push this instance; number " + a + ", index " + aIndex + " was used before.");
+      console.log("Cannot push this instance; number " + b + ", index " + bIndex + " was used before.");
       return;
     } else if (pairSum === arg){ // if sum of pairs equals arg, return sum
     var indSum = aIndex + bIndex;
-    usedNums.push(a);
-    usedNums.push(b);
     usedIndices.push(aIndex);
     usedIndices.push(bIndex);
+    arr2[aIndex] = "X";
+    arr2[bIndex] = "X";
     sum += indSum;
     return indSum; // else, return
     } else {
@@ -34,6 +37,7 @@ function pairwise(arr, arg) {
   //function that walks through all possible combinations of nums in arr
   for (var i = 0; i < arr.length - 1; i++){
     for (var j = 1 + i; j < arr.length; j++){
+      console.log("i:" + i + "; j:" + j);
       indiceSum(arr[i], arr[j]);
     }
   }

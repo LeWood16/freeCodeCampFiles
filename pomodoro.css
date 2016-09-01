@@ -1,0 +1,25 @@
+#start, #reset, #pause{
+  width: 100px;
+  height: 100px;
+  color: white;
+  font-weight: 900;
+  font-size: 30px;
+}
+
+#start{
+background: green;
+}
+
+#pause{
+background: red;
+}
+
+#reset{
+background: blue;
+}
+
+#test-div{
+  font-size: 40px;
+  font-weight: 900;
+  background: blue;
+}

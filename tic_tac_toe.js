@@ -1,25 +1,3 @@
-/*====================================
-BEST PRACTICES
--plan out your program/app on paper first (you don't have to follow it)
--each function should only be responsible for one task as a rule; this makes debugging much quicker
--document fully; comment each function, end of function, sometimes even line of code, etc.
--test each step as you go; this makes debugging much quicker
-====================================*/
-
-
-
-/*====================================
-intro menu
--allow for picking a letter
--disappear (in a cool way) after a letter has been selected
--computer gets the unselected letter
--user gets the selected letter
--all relevant functions update accordingly
-====================================*/
-
-// $("#game-over").hide();
-
-
 $(document).ready(function(){
   var availableSquaresArr = [0,1,2,3,4,5,6,7,8];
   var playerArr = [];
@@ -132,17 +110,5 @@ $(document).ready(function(){
      $("#game-over").hide();
      reset();
    }); // end x function
-  
-  // click button
-  
-  // button checks its ID,
-  // then takes its ID out of available squares arr,
-  // then adds its ID to player's arr (or computer's arr)
-  // then player's (or computer's) letter is added to the clicked button/div
-  
-  // then whether or not player (or computer) won is checked
-  //   if player (or computer) won, a message and an option to play again is given
-  
-  
   
 }); // end ready

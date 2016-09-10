@@ -2,17 +2,30 @@
 BEST PRACTICES
 -plan out your program/app on paper first (you don't have to follow it)
 -each function should only be responsible for one task as a rule; this makes debugging much quicker
--document fully; comment each function, end of function, line of code, etc.
+-document fully; comment each function, end of function, sometimes even line of code, etc.
 -test each step as you go; this makes debugging much quicker
 ====================================*/
 
-$("#game-over").hide();
+
+
+/*====================================
+intro menu
+-allow for picking a letter
+-disappear (in a cool way) after a letter has been selected
+-computer gets the unselected letter
+-user gets the selected letter
+-all relevant functions update accordingly
+====================================*/
+
+// $("#game-over").hide();
 
 
 $(document).ready(function(){
   var availableSquaresArr = [0,1,2,3,4,5,6,7,8];
   var playerArr = [];
   var computerArr = [];
+  var playerLetter = "X";
+  var computerLetter = "O";
   
   function winCheck(arr){
     var won = false;
@@ -59,13 +72,12 @@ $(document).ready(function(){
     var randomSquare = arr[square];
     takeSquareComp(square, computerArr);
     if (winCheck(computerArr) === true){
+      $("#msg").html("You lost...");
+      $("#msg").attr("class", "red");
       $("#game-over").show();
     }// end if loop
-    randomSquare.innerHTML = "O";
-    randomSquare.className = "filled";
-   
-    
-//    s.innerHTML = "O"; // I left off here <<<<<<<
+    randomSquare.innerHTML = computerLetter;
+    randomSquare.className = "filled";  
   }; // end compTurn function
   
 // checks if square is available and if player hasn't taken the square yet  
@@ -82,25 +94,44 @@ $(document).ready(function(){
     } // end if else loop
   }; // end takeEmOut function
   
- 
+  function reset(){
+    availableSquaresArr = [0,1,2,3,4,5,6,7,8];
+    playerArr = [];
+    computerArr = [];
+    var c = $("#main").children();
+    c.attr("class", "empty");
+    c.html("?");
+  }; // end reset function
+   
   
   $("#main >").click(function(){
     var d = $(this).attr('data');
     d = +d;
     takeSquare(d, playerArr);
     if (winCheck(playerArr) === true){
+      $("#msg").html("You won!");
+      $("#msg").attr("class", "green");
       $("#game-over").show();
     }// end if loop
-    $(this).html("X");
+    $(this).html(playerLetter);
     $(this).attr("class", "filled");
     compTurn();
   }); // end square click function
   
   
-   $("#test").click(function(){
-     compTurn();
-     console.log(computerArr);
-  }); // end test click function
+   $("#x").click(function(){
+     playerLetter = "X";
+     computerLetter = "O";
+     $("#game-over").hide();
+     reset();
+   }); // end x function
+  
+   $("#o").click(function(){
+     playerLetter = "O";
+     computerLetter = "X";
+     $("#game-over").hide();
+     reset();
+   }); // end x function
   
   // click button
   

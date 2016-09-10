@@ -12,6 +12,7 @@ $("#game-over").hide();
 $(document).ready(function(){
   var availableSquaresArr = [0,1,2,3,4,5,6,7,8];
   var playerArr = [];
+  var computerArr = [];
   
   function winCheck(arr){
     var won = false;
@@ -39,56 +40,66 @@ $(document).ready(function(){
     return randomNumber;
   } // end rand function
   
+   function takeSquareComp(num, arr){ 
+    var computerIndex = computerArr.indexOf(num); 
+    var availableIndex = availableSquaresArr.indexOf(num); 
+    var notInComputerArr = (computerIndex === -1); 
+    var isAvailableSquare = (availableIndex > -1);  
+    if (notInComputerArr && isAvailableSquare){ 
+      availableSquaresArr.splice(availableIndex, 1);
+      arr.push(num); 
+    } else { 
+      return; 
+    } // end if else loop
+  }; // end takeSquareComp function
+  
   function compTurn(){ // the computer makes its turn
-    var val = "data-value";
+    var arr = $("#main >");
     var square = rand(availableSquaresArr);
-    var s = $("#main >")[data=square];
-    var t = s.value;
-    console.log(t);
-    s.innerHTML = "O"; // I left off here <<<<<<<
+    var randomSquare = arr[square];
+    takeSquareComp(square, computerArr);
+    if (winCheck(computerArr) === true){
+      $("#game-over").show();
+    }// end if loop
+    randomSquare.innerHTML = "O";
+    randomSquare.className = "filled";
+   
+    
+//    s.innerHTML = "O"; // I left off here <<<<<<<
   }; // end compTurn function
   
-  
-  function squareValues(arr){
-  // changes an array value based on a user's click  
-  }; // end squareValues
-  
-// checks if square is available and if player hasn't take the square yet  
-  function takeEmOut(arr, num){ // grab player's array and data number of square clicked
-    var playerIndex = arr.indexOf(num); // index of square's data number in player's array
-    var availableIndex = availableSquaresArr.indexOf(num); // index of square's data number in availability array
-    var notInPlayerArr = (playerIndex === -1); // boolean if index is in player's array
-    var isAvailableSquare = (availableIndex > -1);  // boolean if index in in availability array
-    if (notInPlayerArr && isAvailableSquare){ // if not in player's array but an available square,
-      availableSquaresArr.splice(availableIndex, 1); // take data value out of availability array,
-      arr.push(num); // then put in player's array
-    } else { // otherwise
-      return; // return out of if loop
+// checks if square is available and if player hasn't taken the square yet  
+  function takeSquare(num, arr){ 
+    var playerIndex = playerArr.indexOf(num); 
+    var availableIndex = availableSquaresArr.indexOf(num); 
+    var notInPlayerArr = (playerIndex === -1); 
+    var isAvailableSquare = (availableIndex > -1);  
+    if (notInPlayerArr && isAvailableSquare){ 
+      availableSquaresArr.splice(availableIndex, 1);
+      arr.push(num); 
+    } else { 
+      return; 
     } // end if else loop
   }; // end takeEmOut function
+  
+ 
   
   $("#main >").click(function(){
     var d = $(this).attr('data');
     d = +d;
-    takeEmOut(playerArr, d);
-      if (winCheck(playerArr) === true){
+    takeSquare(d, playerArr);
+    if (winCheck(playerArr) === true){
       $("#game-over").show();
-      }// end if loop
+    }// end if loop
     $(this).html("X");
+    $(this).attr("class", "filled");
+    compTurn();
   }); // end square click function
   
   
-  function ifWinner(a){
-    if (a === true){
-      $("#game-over").show();
-    } else {
-      return;
-    } // end if else loop
-  } // end ifWinner function
-  
-  
    $("#test").click(function(){
-    console.log(playerArr);
+     compTurn();
+     console.log(computerArr);
   }); // end test click function
   
   // click button

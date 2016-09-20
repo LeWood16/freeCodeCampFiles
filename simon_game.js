@@ -33,6 +33,7 @@ $(document).ready(function(){
   var arr = [0,1,2,3];
   var divArr = $("#main >");
   var series = [];
+  var colorNames = ['blue', 'red', 'green', 'yellow'];
   
   var rates = [600, 400, 200];
   var audioRates = [0.5, 1, 2];
@@ -71,7 +72,7 @@ $(document).ready(function(){
     // picks a random div from #main child nodes
   function rand(){ 
     var randomNumber = arr[Math.floor(Math.random() * arr.length)];
-    var div = divArr[randomNumber];
+    var div = colorNames[randomNumber];
     return div;
     
   }; // end rand function
@@ -101,8 +102,8 @@ $(document).ready(function(){
     t = rates[2];
   }; // end fast function
   
-  
-    function blue(){
+  var colors = {
+    blue : function(){
       audio1.play();
       $("#blue").animate(
         {
@@ -114,9 +115,9 @@ $(document).ready(function(){
         },
         t
       ); // end animate 
-    }; // end blue function
+    }, // end blue function
   
-    function green(){
+    green : function(){
       audio2.play();
       $("#green").animate(
         {
@@ -128,9 +129,9 @@ $(document).ready(function(){
         },
         t
       ); // end animate 
-    }; // end green function
+    }, // end green function
   
-    function yellow(){
+    yellow : function(){
       audio3.play();
       $("#yellow").animate(
         {
@@ -142,9 +143,9 @@ $(document).ready(function(){
         },
         t
       ); // end animate 
-    }; // end green function
+    }, // end yellow function
   
-    function red(){
+    red : function(){
       audio4.play();
       $("#red").animate(
         {
@@ -156,8 +157,8 @@ $(document).ready(function(){
         },
         t
       ); // end animate 
-    }; // end green function
-  
+    } // end red function
+}; // end colors object
   
   function series(){ // generates random series of button clicks
     // makes an array 
@@ -180,23 +181,25 @@ $(document).ready(function(){
   }); // end fast button
   
   $("#test").click(function(){
-    console.log(rand());
+    var r = "colors." + rand() + "()";
+    return r;
+    console.log(r);
   }); // end red function
   
   $("#red").click(function(){
-    red();
+    colors.red();
   }); // end red click functiom
   
   $("#green").click(function(){
-    green();
+    colors.green();
   }); // end green click functiom
   
   $("#blue").click(function(){
-    blue();
+    colors.blue();
   }); // end blue click functiom
   
   $("#yellow").click(function(){
-    yellow();
+    colors.yellow();
   }); // end yellow click functiom
   
 }); // end ready

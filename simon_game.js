@@ -39,9 +39,9 @@ $(document).ready(function(){
   var arr = [0,1,2,3];
   var divArr = $("#main >");
   
-  var rates = [835.5, 626.6, 417.7];
-  var halfRates = [417.5, 313.3, 208.8];
-  var audioRates = [0.75, 0.85, 1];
+  var rates = [885.5, 736.6, 580.7];
+// var halfRates = [417.5, 313.3, 208.8];
+  var audioRates = [0.9, 1.25, 1.45];
 //  var functionRates = [750, 650, 550];
   var t = rates[0];
   var a = audioRates[0];
@@ -66,7 +66,7 @@ $(document).ready(function(){
     // picks a random div from #main child nodes
   function rand(){ 
     var randomNumber = arr[Math.floor(Math.random() * arr.length)];
-    var div = series[3];
+    var div = series[randomNumber];
     return div;
     
   }; // end rand function
@@ -103,7 +103,7 @@ $(document).ready(function(){
         {
           backgroundColor: '#0040ff'          
         },
-        50).animate(
+        1).animate(
         {
           backgroundColor: '#000066'
         },
@@ -117,7 +117,7 @@ $(document).ready(function(){
         {
           backgroundColor: '#00cc00'          
         },
-        50).animate(
+        1).animate(
         {
           backgroundColor: '#007000'
         },
@@ -131,7 +131,7 @@ $(document).ready(function(){
         {
           backgroundColor: '#F9F910'          
         },
-        50).animate(
+        1).animate(
         {
           backgroundColor: '#909000'
         },
@@ -145,7 +145,7 @@ $(document).ready(function(){
         {
           backgroundColor: '#FF0000'          
         },
-        50).animate(
+        1).animate(
         {
           backgroundColor: '#9F0000'
         },

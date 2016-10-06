@@ -1,17 +1,6 @@
 
 /*==================================================================
-
-
--first one is random, then store the first one
--only fire random function one at a time
--run all of the stored color functions (based on the dynamically built array, and then fire the single random color function)
-
-
-
------ build patternArr properly
-
-
-
+-speed up on the 5th, 9th, and 13th step
 
 USER STORIES
 -Each time I input a series of button presses correctly, I see the same series of button presses but with an additional step
@@ -101,6 +90,49 @@ $(document).ready(function(){
       ); // end animate 
     } // end red function
 }; // end colors object
+  
+    function ifWrongAnimation(){
+    $("#score").animate(
+        {
+          backgroundColor: '#FF0000',
+          color: '#FFFFFF'
+        },
+        200).animate(
+        {
+          backgroundColor: '#9F0000'
+        },
+        200).animate(
+        {
+          backgroundColor: '#FF0000'          
+        },
+        200).animate(
+        {
+          backgroundColor: '#9F0000'
+        },
+        200).animate(
+        {
+          backgroundColor: '#FF0000'          
+        },
+        200).animate(
+        {
+          backgroundColor: '#9F0000'
+        },
+        200).animate(
+        {
+          backgroundColor: '#FF0000'
+        },
+        200).animate(
+        {
+          backgroundColor: '#9F0000'          
+        },
+        200).animate(
+        {
+          backgroundColor: '#FFFFFF',
+          color: '#000000'
+        },
+        1000
+      ); // end animate 
+    } // end ifWrongAnimation function  
   //*** consider slimming this down too
    var series = [colors.green,
                  colors.red,
@@ -191,17 +223,18 @@ function slow(){
   var arr = [0,1,2,3];
   var patternArr = [];
   var intervalID;
+  var strictMode = false;
   
   function rand(){ 
     return arr[Math.floor(Math.random() * arr.length)];
   }; // end rand function
   
-  function addColorToStack(){
+  function addColorToStack(){ // pushes a color to patternArr
     var randomNum = rand();
     patternArr.push(randomNum);
   }; // end addColorToStack function
  
-  function fireCurrentColor(a){
+  function fireCurrentColor(a){ // invokes the given color animation
     if (a === 0){
       green();
     } else if (a === 1){
@@ -215,46 +248,154 @@ function slow(){
  
   var c = 0;
   var j = 0; 
+  var playerChoiceIndex = 0;
+  var playerArr = []; // array for storing player guesses
   
   function fireColorMagazine(){
-    c = patternArr[j]; // curent patternArr index
-    fireCurrentColor(c);
-    j++;
+    playerChoiceIndex = 0;
+    c = patternArr[j];   // store current color choice
+    fireCurrentColor(c); // invoke current color choice
+    j++;                 // move to next choice
     if (j > patternArr.length - 1){
       clearInterval(intervalID);
       j = 0;
-    }
+    }                    // stop at end of sequence
   }; // end fireColorMagazine function
-
   
-  $("#test").click(function(){
-    addColorToStack();
+  
+  function outputScore(){
+    var currentScore = patternArr.length;
+    
+    if (currentScore > 4){
+      medium();
+    } else if (currentScore > 8){
+      fast();
+    }
+    
+    if (patternArr.length < 10){
+      $("#score").html("0" + currentScore);
+    } else {
+    $("#score").html(currentScore);
+    }
+  }; // end outputScore function
+  
+  function runGame(){
+    playerChoiceIndex = 0;
+    // addColorToStack();
     intervalID = setInterval(fireColorMagazine, t);
-  }); // end test button click
+    playerArr = [];
+    outputScore();
+  }; // end runGame function
   
-  $("#add-click").click(function(){
+  $("#clear-interval").click(function(){
     clearInterval(intervalID);
   }); // end yellow click functiom
+  
+   $("#test").click(function(){
+     setTimeout(runGame, 300);
+    //  runGame();
+     console.log("patternArr:" + patternArr);
+    /*=====
+     when a color button is clicked:
+       logs the button as the 0th index of playerArr
+       checks whether playerArr[0] === patternArr[0]
+         if yes:
+            do nothing;
+         if no:
+            wrongChoiceAnimation();
+            fire all the colors stored in patternArr(setTimemout for 1000);
+    
+    
+    
+    
+    
+    
+    =====*/
+  }); // end test button click
   
 // ===== end random series generator module =========================
   
 // ===== player guessing module =====================================
-  var playerArr = [];
+
   
-  $("#start").click(function(){
+  $("#wrong-test").click(function(){
+    outputScore();
+    ifWrongAnimation();
+  }); // end wrong-test button click function
+  
+  $("#main >").click(function(){
+    var btnIndex = $(this).index();
+    playerArr.push(btnIndex);
+    var choice = sameSoFar();
+    if (choice === false){
+      if (strictMode === false){
+        repeatSameLevel();
+      } else if (strictMode === true){
+        newGame();
+      }
+    } else if (choice === true && patternArr.length === playerArr.length){
+      nextLevel();
+    } else {
+      return;
+    }
+  }); // end main children click function
+  
+  function nextLevel(){
     addColorToStack();
-    intervalID = setInterval(fireColorMagazine, t);    
+    setTimeout(runGame, 500);        
+  }; // end nextLevel function
+  
+  function repeatSameLevel(){
+    ifWrongAnimation();
+    setTimeout(runGame, 500);
+  }; // end repeatSameLevel function
+  
+  $("#start-btn").click(function(){
+    newGame(); 
   }); // end start click function
   
+  $("#same-test").click(function(){
+    console.log("playerArr:" + playerArr);
+    console.log("patternArr:" + patternArr);
+    console.log(sameSoFar()); 
+  }); // end start click function  
   
   
-  
-  
-  
-  
-  
-
+  // buttons in middle need to be moved... pressing color buttons at the same time
  
 // ===== end player guessing module =================================
+
+  function sameSoFar(){
+    for (var i = 0; i < playerArr.length; i++)
+      if (playerArr[i] != patternArr[i]) return false;
+    return true; 
+  }; // end equalArrays function
+  
+  function newGame(){
+    patternArr = [];
+    playerArr = [];
+    outputScore();
+    nextLevel();
+  }; // end resetGame function
+  
+  $("#reset-btn").click(function(){
+    newGame();
+  }); // end reset-btn click function
+  
+  $("#strict").click(function(){
+    // toggle strict mode
+    if (strictMode === false){
+      strictMode = true;
+    } else if (strictMode === true){
+      strictMode = false;
+    }
+    
+    // toggle background color depending on strict mode
+    if (strictMode === true){
+      $("#strict").attr("class", "on");
+    } else if (strictMode === false){
+      $("#strict").attr("class", "off");
+    }
+  }); // end strict-indicator function
   
 }); // end ready
